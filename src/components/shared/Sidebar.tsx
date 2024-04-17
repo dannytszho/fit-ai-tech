@@ -5,7 +5,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import { SignedIn, UserButton, SignedOut } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
-import { navLinks } from "@/app/constants";
+import { navLinks } from "@/constants";
 
 const Sidebar = () => {
   const pathname = usePathname();

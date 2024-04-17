@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CustomField } from "./CustomField";
-import { ageOptions, levelOptions, sportOptions } from "@/app/constants";
+import { ageOptions, levelOptions, sportOptions } from "@/constants";
 import React, { useState } from "react";
 
 export const formSchema = z.object({
