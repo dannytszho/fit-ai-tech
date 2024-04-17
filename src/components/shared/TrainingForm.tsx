@@ -32,7 +32,16 @@ export const formSchema = z.object({
   // weight: z.number().optional(),
 });
 
-const TrainingForm = ({ onclick }) => {
+const TrainingForm = ({
+  onclick,
+}: {
+  onclick: (
+    sport: string,
+    level: string,
+    age: string,
+    duration: string
+  ) => void;
+}) => {
   const [sport, setSport] = useState("");
   const [age, setAge] = useState("");
   const [level, setLevel] = useState("");
