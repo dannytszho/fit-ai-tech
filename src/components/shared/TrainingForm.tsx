@@ -42,10 +42,10 @@ const TrainingForm = ({
     duration: string
   ) => void;
 }) => {
-  const [sport, setSport] = useState("");
-  const [age, setAge] = useState("");
-  const [level, setLevel] = useState("");
-  const [duration, setDuration] = useState("");
+  const [sport, setSport] = useState("baseball");
+  const [age, setAge] = useState("25");
+  const [level, setLevel] = useState("beginner");
+  const [duration, setDuration] = useState("1");
   const [isCreating, setIsCreating] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -199,7 +199,7 @@ const TrainingForm = ({
         <Button
           type="button"
           className="submit-button capitalize"
-          disabled={isCreating}
+          // disabled={isCreating}
           onClick={onCreateHandler}
         >
           {isCreating

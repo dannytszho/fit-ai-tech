@@ -170,3 +170,183 @@ export const ageOptions = {
   99: "99",
   100: "100",
 };
+
+export const trainingPlans = [
+  {
+    author: {
+      _id: "1",
+      firstName: "Peter",
+      lastName: "Pan",
+    },
+    numberOfWeeks: 8,
+    sport: "Soccer",
+    skillLevel: "Advanced",
+    daysOfTraining: ["Tuesday", "Thursday", "Saturday"],
+    exercisesByDay: {
+      Tuesday: ["Passing drills", "Shooting practice"],
+      Thursday: ["Tactical exercises", "Conditioning drills"],
+      Saturday: ["Scrimmage", "Set-piece practice"],
+    },
+  },
+  {
+    author: {
+      _id: "2",
+      firstName: "Alice",
+      lastName: "Wonderland",
+    },
+    numberOfWeeks: 6,
+    sport: "Basketball",
+    skillLevel: "Intermediate",
+    daysOfTraining: ["Monday", "Wednesday", "Friday"],
+    exercisesByDay: {
+      Monday: ["Dribbling drills", "Shooting practice"],
+      Wednesday: ["Defensive drills", "Passing drills"],
+      Friday: ["Scrimmage", "Conditioning drills"],
+    },
+  },
+  {
+    author: {
+      _id: "3",
+      firstName: "John",
+      lastName: "Doe",
+    },
+    numberOfWeeks: 10,
+    sport: "Tennis",
+    skillLevel: "Beginner",
+    daysOfTraining: ["Monday", "Wednesday", "Friday"],
+    exercisesByDay: {
+      Monday: ["Forehand practice", "Backhand drills"],
+      Wednesday: ["Serve practice", "Footwork exercises"],
+      Friday: ["Volleys practice", "Match simulation"],
+    },
+  },
+  // Add 10 more training plans here...
+  {
+    author: {
+      _id: "4",
+      firstName: "Emma",
+      lastName: "Smith",
+    },
+    numberOfWeeks: 8,
+    sport: "Swimming",
+    skillLevel: "Advanced",
+    daysOfTraining: ["Monday", "Wednesday", "Friday"],
+    exercisesByDay: {
+      Monday: ["Freestyle technique", "Breaststroke drills"],
+      Wednesday: ["Backstroke drills", "Endurance training"],
+      Friday: ["Butterfly technique", "Sprint intervals"],
+    },
+  },
+  {
+    author: {
+      _id: "5",
+      firstName: "Michael",
+      lastName: "Johnson",
+    },
+    numberOfWeeks: 12,
+    sport: "Running",
+    skillLevel: "Intermediate",
+    daysOfTraining: ["Tuesday", "Thursday", "Saturday"],
+    exercisesByDay: {
+      Tuesday: ["Long run", "Interval training"],
+      Thursday: ["Tempo run", "Hill sprints"],
+      Saturday: ["Fartlek", "Recovery run"],
+    },
+  },
+  {
+    author: {
+      _id: "6",
+      firstName: "Sarah",
+      lastName: "Wilson",
+    },
+    numberOfWeeks: 6,
+    sport: "Cycling",
+    skillLevel: "Beginner",
+    daysOfTraining: ["Monday", "Wednesday", "Friday"],
+    exercisesByDay: {
+      Monday: ["Road biking", "Hill climbs"],
+      Wednesday: ["Sprints", "Endurance rides"],
+      Friday: ["Bike handling skills", "Recovery ride"],
+    },
+  },
+  {
+    author: {
+      _id: "7",
+      firstName: "David",
+      lastName: "Thompson",
+    },
+    numberOfWeeks: 8,
+    sport: "Gymnastics",
+    skillLevel: "Advanced",
+    daysOfTraining: ["Tuesday", "Thursday", "Saturday"],
+    exercisesByDay: {
+      Tuesday: ["Balance beam routines", "Floor exercises"],
+      Thursday: ["Vault drills", "Parallel bars"],
+      Saturday: ["High bar routines", "Trampoline practice"],
+    },
+  },
+  {
+    author: {
+      _id: "8",
+      firstName: "Jennifer",
+      lastName: "Brown",
+    },
+    numberOfWeeks: 10,
+    sport: "Yoga",
+    skillLevel: "Intermediate",
+    daysOfTraining: ["Monday", "Wednesday", "Friday"],
+    exercisesByDay: {
+      Monday: ["Sun salutations", "Standing poses"],
+      Wednesday: ["Seated poses", "Twists"],
+      Friday: ["Backbends", "Relaxation techniques"],
+    },
+  },
+  {
+    author: {
+      _id: "9",
+      firstName: "Robert",
+      lastName: "Miller",
+    },
+    numberOfWeeks: 12,
+    sport: "Boxing",
+    skillLevel: "Advanced",
+    daysOfTraining: ["Monday", "Wednesday", "Friday"],
+    exercisesByDay: {
+      Monday: ["Shadow boxing", "Heavy bag work"],
+      Wednesday: ["Sparring", "Speed bag drills"],
+      Friday: ["Conditioning circuit", "Strategy analysis"],
+    },
+  },
+  {
+    author: {
+      _id: "10",
+      firstName: "Emily",
+      lastName: "Garcia",
+    },
+    numberOfWeeks: 6,
+    sport: "Martial Arts",
+    skillLevel: "Intermediate",
+    daysOfTraining: ["Tuesday", "Thursday", "Saturday"],
+    exercisesByDay: {
+      Tuesday: ["Forms practice", "Sparring drills"],
+      Thursday: ["Technique refinement", "Weapons training"],
+      Saturday: ["Self-defense scenarios", "Mental conditioning"],
+    },
+  },
+  {
+    author: {
+      _id: "11",
+      firstName: "James",
+      lastName: "Jones",
+    },
+    numberOfWeeks: 10,
+    sport: "Golf",
+    skillLevel: "Advanced",
+    daysOfTraining: ["Monday", "Wednesday", "Friday"],
+    exercisesByDay: {
+      Monday: ["Driving range session", "Putting drills"],
+      Wednesday: ["Iron play practice", "Short game drills"],
+      Friday: ["Course management", "Mental game exercises"],
+    },
+  },
+];
