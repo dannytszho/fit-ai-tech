@@ -5,7 +5,6 @@ export async function POST(req: NextRequest) {
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   const params = await req.json();
-  console.log("params", params);
 
   const response = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",

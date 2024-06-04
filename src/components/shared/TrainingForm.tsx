@@ -64,7 +64,6 @@ const TrainingForm = ({
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     // if (sport === "") {
-    //   console.log("Please select a sport");
     //   return;
     // }
     // onclick(sport);
@@ -177,6 +176,7 @@ const TrainingForm = ({
             render={({ field }) => (
               <Select
                 onValueChange={(value) => {
+                  3;
                   onSelectFieldHandler(value, field.onChange);
                   setDuration(value);
                 }}

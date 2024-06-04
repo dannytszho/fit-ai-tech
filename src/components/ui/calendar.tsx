@@ -7,7 +7,12 @@ import {
   startOfWeek,
 } from "date-fns";
 import * as React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronLeftIcon,
+  ChevronRight,
+  ChevronRightIcon,
+} from "lucide-react";
 import { DayPicker, Row, RowProps } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
@@ -49,9 +54,15 @@ function Calendar({
     return <Row {...props} />;
   }
 
+  const res = CurrentWeekRow({
+    displayMonth: new Date(2024),
+    weekNumber: 1,
+    dates: [new Date()],
+  });
+
   return (
     <div className="relative">
-      <div className="flex">
+      {/* <div className="flex">
         <button
           className={cn(
             buttonVariants({ variant: "outline" }),
@@ -70,18 +81,22 @@ function Calendar({
         >
           <ChevronRight className="h-4 w-4" />
         </button>
-      </div>
+      </div> */}
       <DayPicker
+        fromMonth={new Date(2024, 0)}
+        toMonth={new Date(2024, 11)}
         showOutsideDays={showOutsideDays}
         className={cn("p-3", className)}
         classNames={{
+          labelWeekday: "hidden",
+
           months:
             "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
           month: "space-y-4 mx-auto",
-          // caption: "flex justify-center pt-1 relative items-center",
+          caption: "flex justify-center pt-1 relative items-center",
           // caption_label: "text-sm font-medium",
-          caption: "hidden",
-          caption_label: "hidden",
+          // caption: "hidden",
+          // caption_label: "hidden",
           nav: "space-x-1 flex items-center",
           nav_button: cn(
             buttonVariants({ variant: "outline" }),
@@ -94,11 +109,18 @@ function Calendar({
           head_cell:
             "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
           row: "flex w-full mt-2",
-          cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+          // cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+          cell: cn(
+            "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected].day-range-end)]:rounded-r-md",
+            props.mode === "range"
+              ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
+              : "[&:has([aria-selected])]:rounded-md"
+          ),
           day: cn(
             buttonVariants({ variant: "ghost" }),
             "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
           ),
+          day_range_start: "day-range-start",
           day_range_end: "day-range-end",
           day_selected:
             "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
@@ -112,7 +134,9 @@ function Calendar({
           ...classNames,
         }}
         components={{
-          Row: CurrentWeekRow,
+          // Row: CurrentWeekRow,
+          IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
+          IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
         }}
         {...props}
       />
