@@ -1,62 +1,15 @@
-"use client";
 import TrainingForm from "@/components/shared/TrainingForm";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { createTrainingPlan } from "@/lib/actions/trainingPlan.actions";
 import React from "react";
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+import { getUserById } from "@/lib/actions/user.actions";
 
-const TrainingPageMenu = () => {
-  const [choices, setChoices] = React.useState([]);
+const TrainingPageMenu = async () => {
+  const { userId } = auth();
+  if (!userId) redirect("/sign-in");
 
-  const extractChoices = (choices: any) => {
-    const weeksRegex = /\b(\d+)-week\b/;
-    const sportRegex =
-      /(?:an? (beginner|intermediate|advanced|expert) (\w+)) player/;
-    const daysRegex = /Day (\d+)/g;
-
-    // Extract number of weeks
-
-    const weeksMatch = weeksRegex.exec(choices[0].message.content);
-    const numberOfWeeks = weeksMatch ? parseInt(weeksMatch[1]) : null;
-
-    // Extract sport
-    const sportMatch = sportRegex.exec(choices[0].message.content);
-    const skillLevel = sportMatch ? sportMatch[1] : null;
-    const sport = sportMatch ? sportMatch[2] : null;
-
-    // Extract days of training
-    const daysOfTraining = [];
-    let match;
-    while ((match = daysRegex.exec(choices[0].message.content)) !== null) {
-      daysOfTraining.push(match[1]);
-    }
-
-    // Extract exercises for each day
-    const exercisesByDay = daysOfTraining.map((day) => {
-      const exerciseRegex = new RegExp(
-        `(?:\\*\\*Day ${day}: |Day ${day}: - )(.*?)(?=(?:\\*\\*Day \\d+: |Day \\d+: - )|$)`,
-        "gs"
-      );
-      const matches = [...choices[0].message.content.matchAll(exerciseRegex)];
-      const exercises = matches.map((match) => match[1].trim());
-      return { day, exercises };
-    });
-
-    // Create the training plan object
-    const trainingPlan = {
-      numberOfWeeks,
-      sport,
-      skillLevel,
-      daysOfTraining,
-      exercisesByDay,
-    };
-    return trainingPlan;
-  };
+  const user = await getUserById(userId);
 
   return (
     <>
@@ -68,25 +21,26 @@ const TrainingPageMenu = () => {
           age: string,
           duration: string
         ) => {
-          const response = await fetch("/api/chat-gpt", {
+          "use server";
+          const response = await fetch(`${process.env.URL}/api/chat-gpt`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               prompt: `As a professional fitness coach, generate a detailed and comprehensive training plan in JSON format for a user based on the following characteristics: Age: ${age}, Gender: Male, Skill Level: ${level}, Sport: ${sport}, Duration: ${duration} weeks. 
-              The plan must address: 1. Age and fitness level appropriate exercises, ensuring safe and effective training. 2. Sport-specific skills and conditioning required for ${sport}. Your expert advice should be evident in the structured breakdown of the plan, which should include the number of weeks, sport, skill level, and a detailed schedule of training days and exercises for each day. Ensure the response is strictly in the following JSON format. The only acceptable variables in the below JSON format is that if the user is a beginner, it should generate a 2-3 days per week training plan, if the user is intermediate, it should generate a 3-4 days per week training plan, and if the user is advanced, it should generate a 4-5 days per week training plan, if the user is an expert, it should generate a 5-6 days per week training plan:
+              The plan must address: 1. Age and fitness level appropriate exercises, ensuring safe and effective training. 2. Sport-specific skills and conditioning required for ${sport}. Your expert advice should be evident in the structured breakdown of the plan, which should include the number of weeks, sport, skill level, and a detailed schedule of training days and exercises for each day. Ensure the response is strictly in the following JSON format. The only acceptable variables in the below JSON format is that if the user is a beginner, it should generate a 2-3 days per week training plan, if the user is intermediate, it should generate a 3-4 days per week training plan, and if the user is advanced, it should generate a 4-5 days per week training plan, if the user is an expert, i≈t should generate a 5-6 days per week training plan:
               
               {
-                "training_plan": {
-                    "user_info": {
+                "trainingPlan": {
+                    "userInfo": {
                         "age": 25,
                         "gender": "Male",
-                        "skill_level": "Intermediate",
+                        "skillLevel": "Intermediate",
                         "sport": "Basketball",
                         "duration": "2 weeks"
                     },
-                    "exercise_plan": {
+                    "exercisePlan": {
                         "week_1": {
                             "day_1": {
                                 "exercises": [
@@ -194,33 +148,22 @@ const TrainingPageMenu = () => {
               stop: ["}"],
             }),
           });
+          if (!response.ok) {
+            throw new Error("Failed to fetch from API: " + response.statusText);
+          }
+
           const result = await response.json();
-          setChoices(result.choices);
-          extractChoices(result.choices);
+          const trainingPlan = await JSON.parse(
+            result.choices[0].message.content
+          );
+
+          // Assuming the API response includes the complete training plan in a property named 'trainingPlan'
+
+          if (result && result.choices) {
+            await createTrainingPlan(trainingPlan, user._id);
+          }
         }}
       />
-      <Carousel className="w-full">
-        <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem key={index}>
-              <div className="p-1">
-                <Card>
-                  <CardContent className="flex aspect-square items-center justify-center p-6">
-                    <span className="text-4xl font-semibold">{index + 1}</span>
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-      {choices.map(
-        (choice: { index: number; message: { content: string } }) => {
-          return <p key={choice.index}>{choice.message.content}</p>;
-        }
-      )}
     </>
   );
 };

@@ -11,14 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { trainingPlans } from "@/constants";
 import Image from "next/image";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  addDays,
-  format,
-  parseISO,
-  startOfWeek,
-  add,
-  startOfDay,
-} from "date-fns";
+import { addDays, format, startOfDay } from "date-fns";
 
 type Exercise = {
   name: string;
@@ -141,7 +134,7 @@ const TrainingDetails = () => {
       />
       <Carousel className="w-full">
         <CarouselContent>
-          {systemSelectedDates.map((date, i) => {
+          {systemSelectedDates.map((date: any, i: any) => {
             const dateKey = format(date, "yyyy-MM-dd");
             const dayDetails = exerciseDetails[dateKey];
             // const isSelected = systemSelectedDates.some(
@@ -177,26 +170,28 @@ const TrainingDetails = () => {
                       <div className="text-4xl font-semibold">{i + 1}</div>
                       <p>{`Skill Level: ${dayDetails.skillLevel} 🚀`}</p>
                       <ul>
-                        {dayDetails.exercises.map((exercise, index) => (
-                          <div
-                            key={index}
-                            className="flex border-2 rounded-full my-3 p-2 items-center justify-start space-x-2"
-                          >
-                            <div className="">
-                              <Image
-                                className="mx-auto"
-                                src={`/assets/icons/${dayDetails.sport.toLowerCase()}.svg`}
-                                alt={`${dayDetails.sport} logo`}
-                                width={32}
-                                height={20}
-                              />
+                        {dayDetails.exercises.map(
+                          (exercise: any, index: any) => (
+                            <div
+                              key={index}
+                              className="flex border-2 rounded-full my-3 p-2 items-center justify-start space-x-2"
+                            >
+                              <div className="">
+                                <Image
+                                  className="mx-auto"
+                                  src={`/assets/icons/${dayDetails.sport.toLowerCase()}.svg`}
+                                  alt={`${dayDetails.sport} logo`}
+                                  width={32}
+                                  height={20}
+                                />
+                              </div>
+                              <div className="flex-grow flex flex-col items-center justify-center">
+                                <li>{exercise.name}</li>
+                                <li>{exercise.duration}</li>
+                              </div>
                             </div>
-                            <div className="flex-grow flex flex-col items-center justify-center">
-                              <li>{exercise.name}</li>
-                              <li>{exercise.duration}</li>
-                            </div>
-                          </div>
-                        ))}
+                          )
+                        )}
                       </ul>
                     </div>
                   </CardContent>
