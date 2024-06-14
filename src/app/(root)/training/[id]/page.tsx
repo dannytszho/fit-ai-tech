@@ -30,12 +30,12 @@ type ExerciseDetails = {
   [key: string]: DayDetails;
 };
 
-const getTrainingPlan = async () => {
-  const res = await getTrainingPlanById();
-  const trainingPlan = await res.json();
+// const getTrainingPlan = async () => {
+//   const res = await getTrainingPlanById();
+//   const trainingPlan = await res.json();
 
-  console.log("trainingPlan", trainingPlan);
-};
+//   console.log("trainingPlan", trainingPlan);
+// };
 
 const TrainingDetails = () => {
   const startOfCurrentWeek = startOfDay(new Date());
