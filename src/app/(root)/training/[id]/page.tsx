@@ -12,6 +12,7 @@ import { trainingPlans } from "@/constants";
 import Image from "next/image";
 import { Calendar } from "@/components/ui/calendar";
 import { addDays, format, startOfDay } from "date-fns";
+import { getTrainingPlanById } from "@/lib/actions/trainingPlan.actions";
 
 type Exercise = {
   name: string;
@@ -27,6 +28,13 @@ type DayDetails = {
 
 type ExerciseDetails = {
   [key: string]: DayDetails;
+};
+
+const getTrainingPlan = async () => {
+  const res = await getTrainingPlanById();
+  const trainingPlan = await res.json();
+
+  console.log("trainingPlan", trainingPlan);
 };
 
 const TrainingDetails = () => {

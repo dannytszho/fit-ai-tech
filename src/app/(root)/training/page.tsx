@@ -22,13 +22,15 @@ const TrainingPageMenu = async () => {
           duration: string
         ) => {
           "use server";
-          const response = await fetch(`${process.env.URL}/api/chat-gpt`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              prompt: `As a professional fitness coach, generate a detailed and comprehensive training plan in JSON format for a user based on the following characteristics: Age: ${age}, Gender: Male, Skill Level: ${level}, Sport: ${sport}, Duration: ${duration} weeks. 
+          const response = await fetch(
+            `${process.env.NEXT_PUBLIC_URL}/api/chat-gpt`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                prompt: `As a professional fitness coach, generate a detailed and comprehensive training plan in JSON format for a user based on the following characteristics: Age: ${age}, Gender: Male, Skill Level: ${level}, Sport: ${sport}, Duration: ${duration} weeks. 
               The plan must address: 1. Age and fitness level appropriate exercises, ensuring safe and effective training. 2. Sport-specific skills and conditioning required for ${sport}. Your expert advice should be evident in the structured breakdown of the plan, which should include the number of weeks, sport, skill level, and a detailed schedule of training days and exercises for each day. Ensure the response is strictly in the following JSON format. The only acceptable variables in the below JSON format is that if the user is a beginner, it should generate a 2-3 days per week training plan, if the user is intermediate, it should generate a 3-4 days per week training plan, and if the user is advanced, it should generate a 4-5 days per week training plan, if the user is an expert, i≈t should generate a 5-6 days per week training plan:
               
               {
@@ -144,10 +146,11 @@ const TrainingPageMenu = async () => {
                     }
                 }
             }`,
-              max_tokens: 1000,
-              stop: ["}"],
-            }),
-          });
+                max_tokens: 1000,
+                stop: ["}"],
+              }),
+            }
+          );
           if (!response.ok) {
             throw new Error("Failed to fetch from API: " + response.statusText);
           }
