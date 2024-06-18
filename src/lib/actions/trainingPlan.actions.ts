@@ -37,6 +37,14 @@ export interface UpdateTrainingPlanParams {
   duration?: number;
   exercises?: Week[];
 }
+
+const populateUser = (query: any) =>
+  query.populate({
+    path: "author",
+    model: User,
+    select: "_id firstName lastName clerkId",
+  });
+
 // CREATE
 export async function createTrainingPlan(
   trainingPlan: CreateTrainingPlanParams,
@@ -61,12 +69,45 @@ export async function createTrainingPlan(
   }
 }
 
+// GET PLANS BY USER
+export async function getUserPlans({
+  limit = 9,
+  page = 1,
+  userId,
+}: {
+  limit?: number;
+  page: number;
+  userId: string;
+}) {
+  try {
+    await connectToDatabase();
+
+    const skipAmount = (Number(page) - 1) * limit;
+
+    const plans = await populateUser(TrainingPlan.find({ author: userId }))
+      .sort({ updatedAt: -1 })
+      .skip(skipAmount)
+      .limit(limit);
+
+    const totalPlans = await TrainingPlan.find({
+      author: userId,
+    }).countDocuments();
+
+    return {
+      data: JSON.parse(JSON.stringify(plans)),
+      totalPages: Math.ceil(totalPlans / limit),
+    };
+  } catch (error) {
+    handleError(error);
+  }
+}
+
 // READ
 export async function getTrainingPlanById(planId: string) {
   try {
     await connectToDatabase();
 
-    const trainingPlan = await TrainingPlan.findById(planId);
+    const trainingPlan = await populateUser(TrainingPlan.findById(planId));
 
     if (!trainingPlan) throw new Error("Training Plan not found");
 
